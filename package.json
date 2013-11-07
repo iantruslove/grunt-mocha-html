@@ -1,17 +1,17 @@
 {
-  "name": "grunt-mocha-html",
-  "version": "0.1.1",
-  "description": "generate html for mocha browser test.",
+  "name": "grunt-mocha-html-require",
+  "version": "0.1.0",
+  "description": "Generate HTML spec runner for RequireJS based mocha browser tests.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/fnobi/grunt-mocha-html.git"
+    "url": "https://github.com/iantruslove/grunt-mocha-html-require"
   },
   "keywords": [
     "gruntplugin",
     "test",
     "mocha"
   ],
-  "author": "Fujisawa Shin",
+  "author": "Ian Truslove, National Snow and Ice Data Center",
   "license": "BSD",
   "readmeFilename": "README.md",
   "gitHead": "91e598183f4be65191eba0edd8dbee00f3e573a0",

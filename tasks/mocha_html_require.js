@@ -12,6 +12,7 @@ module.exports = function (grunt) {
     var template = grunt.file.read(path.join(taskDir, '/template/runner.html.ejs'));
 
     grunt.registerMultiTask(taskName, taskDescription, function () {
+
         var target = this.target,
             config = grunt.config(taskName)[target],
 
@@ -30,12 +31,12 @@ module.exports = function (grunt) {
                     return grunt.file.expand(pattern);
                 }
             )) : [],
-
-            testPaths = config.test.length ? _.flatten(_.map(
-                config.test, function (pattern) {
-                    return grunt.file.expand(pattern);
-                }
-            )) : [];
+           
+            testPaths = config.test.length ?
+                _.map(
+                    _.flatten(_.map(config.test, function (path) { return grunt.file.expand(path); })),
+                    stripJsCoffeeExtension
+                ): [];
 
         if (!htmlPath) {
             throw new Error('invalid html path.');
@@ -49,6 +50,7 @@ module.exports = function (grunt) {
             checkLeaks : checkLeaks,
             cssPath    : path.relative(dirname, 'node_modules/mocha/mocha.css'),
             mochaPath  : path.relative(dirname, 'node_modules/mocha/mocha.js'),
+            requirePath: path.relative(dirname, 'node_modules/require/require.js'),
             assertPath : path.relative(dirname, assertPath),
             srcPaths   : _.map(srcPaths, function (srcPath) {
                 return path.relative(dirname, srcPath);
@@ -65,3 +67,8 @@ module.exports = function (grunt) {
         }
     });
 };
+
+
+function stripJsCoffeeExtension (path) {
+    return path.replace(/\.(?:js|coffee)$/, "");
+}
