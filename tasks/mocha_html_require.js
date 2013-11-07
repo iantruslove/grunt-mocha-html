@@ -4,9 +4,9 @@ module.exports = function (grunt) {
 
     var _ = grunt.util._;
 
-    var taskName        = 'mocha_html',
+    var taskName        = 'mocha_html_require',
         taskDescription = 'generate html for mocha browser test.',
-        taskDir         = 'node_modules/grunt-mocha-html';
+        taskDir         = 'node_modules/grunt-mocha-html-require';
 
     grunt.file.defaultEncoding = 'utf8';
     var template = grunt.file.read(path.join(taskDir, '/template/runner.html.ejs'));
