@@ -1,50 +1,34 @@
 <html>
-<head>
-<meta charset="utf-8">
-<title><%= title %></title>
-<link rel="stylesheet" href="<%= cssPath %>" />
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="<%= cssPath %>" />
+  </head>
+  <body>
 
-<div id="mocha"></div>
-
-<!-- mocha and assert module -->
-<script src="<%= assertPath %>"></script>
-<script src="<%= mochaPath %>"></script>
-<script src="<%= requirePath %>"></script>
-<script>mocha.setup('bdd')</script>
-
-<!-- js src -->
-<% srcPaths.forEach(function (path) {  %><script src="<%= path %>"></script>
-<% }); %>
-
-<!-- test codes -->
-<% testPaths.forEach(function (path) {  %><script src="<%= path %>"></script>
-<% }); %>
-
-<!-- test codes -->
-<!--
-<% testPaths.forEach(function (path) {  %><script src="<%= path %>"></script><% }); %>
--->
-
-<!-- run test -->
-
-<script>
- require([
-   <% testPaths.forEach(function (path) { %> "<%= path %>", <% }); %>
- ],
- function () {
-   <% if (checkLeaks) { %> mocha.checkLeaks(); <% } %>
-   
-   if (window.mochaPhantomJS) {
-     mochaPhantomJS.run();
-   } else {
-     mocha.run();
-   }
- });
+    <div id="mocha"></div>
 
 
-</script>
+    <script src="<%= mochaPath %>"></script>
 
-</body>
+    <script src="<%= requireConfigPath %>"></script>
+    <script src="<%= requirePath %>"></script>
+
+    <script>mocha.setup('bdd')</script>
+
+    <script>
+      require([
+      <% testPaths.forEach(function (path) { %> "<%= path %>", <% }); %>
+      ],
+      function () {
+      <% if (checkLeaks) { %> mocha.checkLeaks(); <% } %>
+        if (window.mochaPhantomJS) {
+          mochaPhantomJS.run();
+        } else {
+          mocha.run();
+        }
+      });
+    </script>
+
+  </body>
 </html>

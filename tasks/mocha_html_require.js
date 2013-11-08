@@ -26,12 +26,8 @@ module.exports = function (grunt) {
             assert     = config.assert || 'assert',
             assertPath = 'node_modules/' + assert + '/' + assert + '.js',
 
-            srcPaths = config.src.length ? _.flatten(_.map(
-                config.src, function (pattern) {
-                    return grunt.file.expand(pattern);
-                }
-            )) : [],
-           
+	    requireConfigPath = config.requireConfig,
+	    
             testPaths = config.test.length ?
                 _.map(
                     _.flatten(_.map(config.test, function (path) { return grunt.file.expand(path); })),
@@ -50,13 +46,12 @@ module.exports = function (grunt) {
             checkLeaks : checkLeaks,
             cssPath    : path.relative(dirname, 'node_modules/mocha/mocha.css'),
             mochaPath  : path.relative(dirname, 'node_modules/mocha/mocha.js'),
-            requirePath: path.relative(dirname, 'node_modules/require/require.js'),
+	    requireConfigPath: path.relative(dirname, requireConfigPath),
+            requirePath: path.relative(dirname, 'node_modules/requirejs/require.js'),
             assertPath : path.relative(dirname, assertPath),
-            srcPaths   : _.map(srcPaths, function (srcPath) {
-                return path.relative(dirname, srcPath);
-            }),
             testPaths   : _.map(testPaths, function (testPath) {
-                return path.relative(dirname, testPath);
+		// This is entirely dependent on the contents of the require config!
+                return "../../" + testPath;
             })
         });
 
@@ -71,4 +66,8 @@ module.exports = function (grunt) {
 
 function stripJsCoffeeExtension (path) {
     return path.replace(/\.(?:js|coffee)$/, "");
+}
+
+function oneLessParentDirectory (path) {
+    return path.replace(/^\.\.\//, "");
 }
